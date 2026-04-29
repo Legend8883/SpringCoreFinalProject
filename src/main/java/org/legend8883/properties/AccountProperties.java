@@ -5,24 +5,24 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AccountProperties {
-    private final double defaultBalance;
-    private final double transferCommission;
+    private final Double defaultBalance;
+    private final Double transferCommission;
 
     public AccountProperties(
             @Value("${account.default-balance}")
-            double defaultBalance,
+            Double defaultBalance,
             @Value("${account.transfer-commission}")
-            double transferCommission
+            Double transferCommission
     ) {
         this.defaultBalance = defaultBalance;
         this.transferCommission = transferCommission;
     }
 
-    public double getDefaultBalance() {
+    public Double getDefaultBalance() {
         return defaultBalance;
     }
 
-    public double getTransferCommission() {
+    public Double getTransferCommission() {
         return transferCommission;
     }
 }
