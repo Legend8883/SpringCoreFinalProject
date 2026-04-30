@@ -5,8 +5,6 @@ import org.legend8883.console.CommandType;
 import org.legend8883.domain.util.AccountUtil;
 import org.legend8883.domain.util.GeneralUtil;
 import org.legend8883.model.Account;
-import org.legend8883.model.AccountStorage;
-import org.legend8883.model.UserStorage;
 import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
@@ -16,16 +14,13 @@ public class DepositAccountAction implements CommandAction {
     private final Scanner scanner;
     private final GeneralUtil generalUtil;
     private final AccountUtil accountUtil;
-    private final AccountStorage accountStorage;
 
     public DepositAccountAction(
             GeneralUtil generalUtil,
-            AccountUtil accountUtil,
-            AccountStorage accountStorage
+            AccountUtil accountUtil
     ) {
         this.generalUtil = generalUtil;
         this.accountUtil = accountUtil;
-        this.accountStorage = accountStorage;
         scanner = new Scanner(System.in);
     }
 
@@ -36,17 +31,14 @@ public class DepositAccountAction implements CommandAction {
 
         System.out.println("Enter account id: ");
         String accountIdStr = scanner.nextLine();
-        generalUtil.checkIsInputEmpty(accountIdStr);
-        int accountId = generalUtil.parseToInt(accountIdStr);
-        Account account = accountStorage.getAccountById(accountId)
-                .orElseThrow(() -> new IllegalArgumentException("Account not found with id: " + accountId));
+        Account account = accountUtil.getAccountByIdWithValidation(accountIdStr);
 
         System.out.println("Enter deposit amount: ");
         int depositAmount = accountUtil.getValidMoneyAmount(scanner.nextLine());
         double newMoneyAmount = account.getMoneyAmount() + depositAmount;
         account.setMoneyAmount(newMoneyAmount);
 
-        System.out.printf("Deposited %s to account with id: %s. New balance: %s%n", depositAmount, accountId, newMoneyAmount);
+        System.out.printf("Deposited %s to account with id: %s. New balance: %s%n", depositAmount, account.getId(), newMoneyAmount);
 
     }
 
