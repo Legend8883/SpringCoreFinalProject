@@ -1,6 +1,5 @@
-package org.legend8883.service.user;
+package org.legend8883.model;
 
-import org.legend8883.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -25,7 +24,7 @@ public class UserStorage {
         return new ArrayList<>(users.values());
     }
 
-    public void deleteUser(int id) {
+    public void deleteUserById(int id) {
         if (users.containsKey(id)) {
             users.remove(id);
         } else {

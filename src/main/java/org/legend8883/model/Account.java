@@ -1,7 +1,7 @@
 package org.legend8883.model;
 
 public class Account {
-    private static int counter = 0;
+    private static int counter = 1;
     private final Integer id;
     private Integer userId;
     private Double moneyAmount;

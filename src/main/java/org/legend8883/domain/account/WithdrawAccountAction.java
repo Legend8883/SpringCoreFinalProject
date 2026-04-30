@@ -1,4 +1,4 @@
-package org.legend8883.service.account;
+package org.legend8883.domain.account;
 
 public class WithdrawAccountAction {
 }
