@@ -4,6 +4,7 @@ import org.legend8883.console.CommandAction;
 import org.legend8883.console.CommandType;
 import org.legend8883.domain.util.GeneralUtil;
 import org.legend8883.model.Account;
+import org.legend8883.model.AccountStorage;
 import org.legend8883.model.User;
 import org.legend8883.model.UserStorage;
 import org.legend8883.properties.AccountProperties;
@@ -19,14 +20,17 @@ public class CreateAccountAction implements CommandAction {
     private final AccountProperties accountProperties;
     private final UserStorage userStorage;
     private final GeneralUtil generalUtil;
+    private final AccountStorage accountStorage;
 
     public CreateAccountAction(
             AccountProperties accountProperties,
-            UserStorage userStorage, GeneralUtil generalUtil
+            UserStorage userStorage,
+            GeneralUtil generalUtil, AccountStorage accountStorage
     ) {
         this.accountProperties = accountProperties;
         this.userStorage = userStorage;
         this.generalUtil = generalUtil;
+        this.accountStorage = accountStorage;
         scanner = new Scanner(System.in);
     }
 
@@ -43,7 +47,7 @@ public class CreateAccountAction implements CommandAction {
                 .orElseThrow(() -> new IllegalArgumentException("User with id " + userId + " not found"));
 
         Account account = new Account(user.getId(), accountProperties.getDefaultBalance());
-        user.addAccount(account);
+        accountStorage.addAccount(account);
 
         System.out.printf(
                 "Account for user %s created: %s%n",

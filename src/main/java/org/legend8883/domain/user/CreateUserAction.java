@@ -4,6 +4,7 @@ import org.legend8883.console.CommandAction;
 import org.legend8883.console.CommandType;
 import org.legend8883.domain.util.GeneralUtil;
 import org.legend8883.model.Account;
+import org.legend8883.model.AccountStorage;
 import org.legend8883.model.User;
 import org.legend8883.model.UserStorage;
 import org.legend8883.properties.AccountProperties;
@@ -16,16 +17,18 @@ public class CreateUserAction implements CommandAction {
     private final AccountProperties accountProperties;
     private final UserStorage userStorage;
     private final GeneralUtil generalUtil;
+    private final AccountStorage accountStorage;
     private final Scanner scanner;
 
     public CreateUserAction(
             AccountProperties accountProperties,
             UserStorage userStorage,
-            GeneralUtil generalUtil
+            GeneralUtil generalUtil, AccountStorage accountStorage
     ) {
         this.accountProperties = accountProperties;
         this.userStorage = userStorage;
         this.generalUtil = generalUtil;
+        this.accountStorage = accountStorage;
         scanner = new Scanner(System.in);
     }
 
@@ -38,10 +41,10 @@ public class CreateUserAction implements CommandAction {
 
         User user = new User(login);
         Account firstAccount = new Account(user.getId(), accountProperties.getDefaultBalance());
-        user.addAccount(firstAccount);
+        accountStorage.addAccount(firstAccount);
         userStorage.addUser(user);
 
-        System.out.println("User created: " + user);
+        System.out.println("User created: " + user + " with account " + firstAccount);
     }
 
     @Override

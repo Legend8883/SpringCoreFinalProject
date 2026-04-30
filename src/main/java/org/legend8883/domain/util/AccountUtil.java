@@ -17,21 +17,22 @@ public class AccountUtil {
         this.userStorage = userStorage;
     }
 
-    public Optional<Account> getAccountById(Integer accountId) {
-        List<User> users = userStorage.getUsers();
-        List<Account> allAccounts = new ArrayList<>();
-        Account targetAccount = null;
-
-        for (User user : users) {
-            allAccounts.addAll(user.getAccountList());
-        }
-
-        for (Account account : allAccounts) {
-            if (account.getId().equals(accountId)) {
-                targetAccount = account;
-            }
-        }
-
-       return Optional.ofNullable(targetAccount);
-    }
+    //TODO: переделать под AccountStorage
+//    public Optional<Account> getAccountById(Integer accountId) {
+//        List<User> users = userStorage.getUsers();
+//        List<Account> allAccounts = new ArrayList<>();
+//        Account targetAccount = null;
+//
+//        for (User user : users) {
+//            allAccounts.addAll(user.getAccountList());
+//        }
+//
+//        for (Account account : allAccounts) {
+//            if (account.getId().equals(accountId)) {
+//                targetAccount = account;
+//            }
+//        }
+//
+//       return Optional.ofNullable(targetAccount);
+//    }
 }

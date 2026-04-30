@@ -5,6 +5,7 @@ import org.legend8883.console.CommandType;
 import org.legend8883.domain.util.AccountUtil;
 import org.legend8883.domain.util.GeneralUtil;
 import org.legend8883.model.Account;
+import org.legend8883.model.AccountStorage;
 import org.legend8883.model.UserStorage;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +17,16 @@ public class DepositAccountAction implements CommandAction {
     private final UserStorage userStorage;
     private final GeneralUtil generalUtil;
     private final AccountUtil accountUtil;
+    private final AccountStorage accountStorage;
 
     public DepositAccountAction(
             UserStorage userStorage,
-            GeneralUtil generalUtil, AccountUtil accountUtil
+            GeneralUtil generalUtil, AccountUtil accountUtil, AccountStorage accountStorage
     ) {
         this.userStorage = userStorage;
         this.generalUtil = generalUtil;
         this.accountUtil = accountUtil;
+        this.accountStorage = accountStorage;
         scanner = new Scanner(System.in);
     }
 
@@ -36,7 +39,7 @@ public class DepositAccountAction implements CommandAction {
         generalUtil.checkIsInputEmpty(accountIdStr);
 
         int accountId = generalUtil.parseId(accountIdStr);
-        Account account = accountUtil.getAccountById(accountId)
+        Account account = accountStorage.getAccountById(accountId)
                 .orElseThrow(() -> new IllegalArgumentException("Account not found with id: " + accountId));
 
     }
