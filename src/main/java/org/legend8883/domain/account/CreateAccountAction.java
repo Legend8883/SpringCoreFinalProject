@@ -10,8 +10,6 @@ import org.legend8883.model.UserStorage;
 import org.legend8883.properties.AccountProperties;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 @Service
@@ -42,7 +40,7 @@ public class CreateAccountAction implements CommandAction {
         String userIdStr = scanner.nextLine();
         generalUtil.checkIsInputEmpty(userIdStr);
 
-        int userId = generalUtil.parseId(userIdStr);
+        int userId = generalUtil.parseToInt(userIdStr);
         User user = userStorage.getUserById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User with id " + userId + " not found"));
 

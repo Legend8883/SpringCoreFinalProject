@@ -28,9 +28,9 @@ public class GeneralUtil {
         }
     }
 
-    public Integer parseId(String userId) {
+    public Integer parseToInt(String integerStr) {
         try {
-            return Integer.parseInt(userId);
+            return Integer.parseInt(integerStr);
         } catch (NumberFormatException e) {
             throw new NumberFormatException("Input must be an integer");
         }

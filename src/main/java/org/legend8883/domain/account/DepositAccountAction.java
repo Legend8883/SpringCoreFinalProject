@@ -14,16 +14,15 @@ import java.util.Scanner;
 @Service
 public class DepositAccountAction implements CommandAction {
     private final Scanner scanner;
-    private final UserStorage userStorage;
     private final GeneralUtil generalUtil;
     private final AccountUtil accountUtil;
     private final AccountStorage accountStorage;
 
     public DepositAccountAction(
-            UserStorage userStorage,
-            GeneralUtil generalUtil, AccountUtil accountUtil, AccountStorage accountStorage
+            GeneralUtil generalUtil,
+            AccountUtil accountUtil,
+            AccountStorage accountStorage
     ) {
-        this.userStorage = userStorage;
         this.generalUtil = generalUtil;
         this.accountUtil = accountUtil;
         this.accountStorage = accountStorage;
@@ -35,12 +34,19 @@ public class DepositAccountAction implements CommandAction {
     public void execute() {
         generalUtil.checkIsUsersExist();
 
+        System.out.println("Enter account id: ");
         String accountIdStr = scanner.nextLine();
         generalUtil.checkIsInputEmpty(accountIdStr);
-
-        int accountId = generalUtil.parseId(accountIdStr);
+        int accountId = generalUtil.parseToInt(accountIdStr);
         Account account = accountStorage.getAccountById(accountId)
                 .orElseThrow(() -> new IllegalArgumentException("Account not found with id: " + accountId));
+
+        System.out.println("Enter deposit amount: ");
+        int depositAmount = accountUtil.getValidMoneyAmount(scanner.nextLine());
+        double newMoneyAmount = account.getMoneyAmount() + depositAmount;
+        account.setMoneyAmount(newMoneyAmount);
+
+        System.out.printf("Deposited %s to account with id: %s. New balance: %s%n", depositAmount, accountId, newMoneyAmount);
 
     }
 

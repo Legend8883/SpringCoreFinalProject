@@ -1,38 +1,23 @@
 package org.legend8883.domain.util;
 
-import org.legend8883.model.Account;
-import org.legend8883.model.User;
 import org.legend8883.model.UserStorage;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 @Component
 public class AccountUtil {
-    private final UserStorage userStorage;
+    private final GeneralUtil generalUtil;
 
-    public AccountUtil(UserStorage userStorage) {
-        this.userStorage = userStorage;
+    public AccountUtil(GeneralUtil generalUtil) {
+        this.generalUtil = generalUtil;
     }
 
-    //TODO: переделать под AccountStorage
-//    public Optional<Account> getAccountById(Integer accountId) {
-//        List<User> users = userStorage.getUsers();
-//        List<Account> allAccounts = new ArrayList<>();
-//        Account targetAccount = null;
-//
-//        for (User user : users) {
-//            allAccounts.addAll(user.getAccountList());
-//        }
-//
-//        for (Account account : allAccounts) {
-//            if (account.getId().equals(accountId)) {
-//                targetAccount = account;
-//            }
-//        }
-//
-//       return Optional.ofNullable(targetAccount);
-//    }
+    public Integer getValidMoneyAmount(String moneyAmountStr) {
+        generalUtil.checkIsInputEmpty(moneyAmountStr);
+        int moneyAmount = generalUtil.parseToInt(moneyAmountStr);
+        if (moneyAmount < 1) {
+            throw new IllegalArgumentException("Money amount must be greater than one");
+        }
+
+        return moneyAmount;
+    }
 }
